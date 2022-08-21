@@ -42,7 +42,7 @@ public class OrderService {
 
             Product product = optProduct.get();
 
-            if (product.getQuantity() < cart.getQuantity()) {
+            if (product.getQuantity() == 0 || product.getQuantity() < cart.getQuantity()) {
                 return false;
             }
         }
@@ -50,9 +50,9 @@ public class OrderService {
     }
 
     public Double getOrderAmount(List<Cart> products) {
-        Double amount = 0d;
-        Double totalAmount = 0d;
-        Integer available = 0;
+        double amount;
+        double totalAmount = 0d;
+        int available = 0;
 
         for (Cart cart : products) {
 

@@ -47,7 +47,6 @@ public class CartController {
     @PostMapping("/makeNewOrder")
     public ResponseEntity<ResponseOrderDTO> placeOrder(@RequestBody OrderDTO orderDTO) {
         ResponseOrderDTO responseOrderDTO = new ResponseOrderDTO();
-        Double amount = orderService.getOrderAmount(orderDTO.getProducts());
 
         Customer customer =
                 new Customer(
@@ -65,20 +64,19 @@ public class CartController {
             logger.info("New customer registered with id : " + customer.getId());
         }
 
-        if(!orderService.checkProductAvailability(orderDTO.getProducts())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseOrderDTO);
+        if (orderService.checkProductAvailability(orderDTO.getProducts())) {
+            Double amount = orderService.getOrderAmount(orderDTO.getProducts());
+            int orderNumber = (int) (Math.random() * (9000 - 1000 + 1) + 1000);
+            Date orderDate = new Date(System.currentTimeMillis());
+            Order order = new Order(orderNumber, customer, orderDate, orderDTO.getProducts());
+            order = orderService.placeOrder(order);
+            logger.info("Your order has been placed successfully!");
+
+            responseOrderDTO.setAmount(amount);
+            responseOrderDTO.setNumber(orderNumber);
+            responseOrderDTO.setCreationDate(order.getCreationDate());
+            responseOrderDTO.setOrderId(order.getId());
         }
-
-        Integer orderNumber = (int) (Math.random() * (9000 - 1000 + 1) + 1000);
-        Date orderDate = new Date(System.currentTimeMillis());
-        Order order = new Order(orderNumber, customer, orderDate, orderDTO.getProducts());
-        order = orderService.placeOrder(order);
-        logger.info("Your order has been placed successfully!");
-
-        responseOrderDTO.setAmount(amount);
-        responseOrderDTO.setNumber(orderNumber);
-        responseOrderDTO.setCreationDate(order.getCreationDate());
-        responseOrderDTO.setOrderId(order.getId());
 
         return ResponseEntity.ok(responseOrderDTO);
     }
