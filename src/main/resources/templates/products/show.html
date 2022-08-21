@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Bricks</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+  <link th:href="@{css/style.css}" rel="stylesheet">
+</head>
+
+<body>
+  <div th:include="template.html::header"></div>
+
+  <div class="container">
+    <h1 class="display-3">Bricks List</h1>
+
+    <a class="btn btn-primary" th:href="@{/register}">Add New</a>
+
+    <table class="table">
+      <caption>List of bricks</caption>
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Price</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Lorem</td>
+          <td>Ipsum</td>
+          <td>Dolor</td>
+          <td>Sit</td>
+          <td>
+            <a class="btn btn-warning" href="">Edit</a>
+            <a class="btn btn-danger" href="">Delete</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <div th:include="template.html::footer"></div>
+
+  <script th:src="@{js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>
